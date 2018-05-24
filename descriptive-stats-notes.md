@@ -1,5 +1,6 @@
 # Descriptive Statistics
 
+## Intro to Research Methods (lesson 3)
 ### Constructs
 - In scientific theory, particularly psychology, a hypothetical construct is an explanatory variable which is not directly observable. (itchiness, happiness, stress, intelligence, motivation, etc)
 
@@ -24,10 +25,10 @@ We use <code>$\bar{x}$</code> to estimate <code>$\mu$</code>.
 
 **Dependent** or the **outcome** variable is the y-axis variable
 
-#
+---
 ### Correlation does not prove causation!
 
-#
+---
 ### Observational studies
 - To show relationships.
 - Just ask people and you'll see a trend.
@@ -48,7 +49,9 @@ We use <code>$\bar{x}$</code> to estimate <code>$\mu$</code>.
 ### Indicator Response
 - ex. Pouched rats scratching near tea eggs containing TNT. So I guess it's *indicating* that TNT is nearby. The humans needed some kind of **indicator response** from the mice to know when there was TNT nearby.
 
-#
+---
+## Visualizing Data
+
 ### Absolute Frequency
 - the whole numbers. Ex. 12 or 43 out of <code>$n = 50$</code>.
 
@@ -82,24 +85,10 @@ We use <code>$\bar{x}$</code> to estimate <code>$\mu$</code>.
 - peak is on the left
 - most values on the left
 
-#
-### Deviation (from the mean)
+---
+## Central Tendencies
 
-- <code>$x_i - \bar{x}$</code> (xi minus x-bar)
-
-- how far from zero it is
-
-### Squared deviations
-- just the *deviation* squared
-
-### SS
-- sum of squares
-- sum of the squared deviations
-
-### variance
-- **SS** divided by <code>$n$</code>
-- BUT if we treated the whole as a sample (<code>$n$</code>), it would be divided by (<code>$n - 1$</code>)
-    - I don't know why
+3 measures of center: mode, median, mean
 
 ### Mode
 - most common occurrence - ie, in [1, 2, 3, 4, 4] it's 4
@@ -117,6 +106,68 @@ We use <code>$\bar{x}$</code> to estimate <code>$\mu$</code>.
 - many samples from the same population will have similar means (!!!)
 - the mean of a sample can be used to make inferences about the population it came from (!!!)
 - **outliers** - outlying data points that completely skew the average
+[tough quiz](https://classroom.udacity.com/courses/ud002-bert/lessons/1489118552/concepts/773143370923)
 
 ### Median
 - value in the middle of the distribution
+- if there are 2 numbers, it's the middle of the middles (the average of the middle 2 numbers)
+- **ROBUST** = doesn't change much due to outliers
+- best measure of central tendencies when dealing with highly skewed distributions
+- formula for an even number of values:
+<code>$\frac{x_\frac{n}{2} + x_{\frac{n}{2}+1}}{2}$</code>
+- formula for an odd number of values: <code>$x_\frac{n+1}{2}$</code>
+
+---
+## Variability
+
+### Interquartile Range (IQR)
+- divide the data into quarters, and subract the lower median from the upper median (Q3 - Q1). This is the IQR.
+- roughly 50% of data is within this range
+- IQR is **not affected by outliers**.
+- more or less describes the spread of the data
+
+### Outliers
+- extreme data points in a distribution
+- traditionally cut off top and bottom 25%
+- formula to determine outliers: <code>$Outlier < Q_1 - 1.5*(IQR)$</code>
+- formula to determine outliers: <code>$Outlier > Q_3 - 1.5*(IQR)$</code>
+- traditionally cut off top and bottom 25% of distributions to account for outliers
+
+### Boxplots
+- used to visualize *quartiles* and *outliers*
+- outer lines are the *min* and *max* values that are NOT outliers
+- the whole box is the *IQR*
+- the box edges are, as shown in image below, *Q1*, *Q2*, and *Q3*
+- *outliers* are shown as dots outside of the *min* and *max* lines.
+
+![boxplot image](boxplot.PNG)
+
+![image](match-the-boxplots.PNG)
+
+### Deviation (from the *mean*/average)
+- find the *mean*, then subtract each data point (find the absolute)
+- <code>$x_i - \bar{x}$</code> (xi minus x-bar)
+- how far from zero it is
+
+### Squared deviations
+- just the *deviations* squared
+
+### SS
+- sum of the squared deviations
+- formula: <code>$\Sigma(x_i - \bar{x})^2$</code>
+
+### variance
+- **SS** divided by <code>$n$</code>
+- is the average squared deviation
+- BUT if we treated the whole as a sample (<code>$n$</code>), it would be divided by (<code>$n - 1$</code>)
+    - I don't know why
+
+### Standard Deviation
+- square root of the variance (which is the average of squared deviations)
+- the most common measure of spread
+- denoted by (small sigma) <code>$\sigma$</code>
+- formula: <code>$\sigma=\sqrt{\frac{\Sigma(x_i - \bar{x})^2}{n}}$</code>
+- within a *normal distribution*, 68% of data sample falls within a 'standard deviation' from the mean, and 95% of the data sample falls within 2 'standard deviations' from the mean (see figure!).
+
+![point of standard deviation](point-of-standard-deviation.PNG)
+
