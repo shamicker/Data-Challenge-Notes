@@ -52,12 +52,18 @@ We use <code>$\bar{x}$</code> to estimate <code>$\mu$</code>.
 ---
 ## Visualizing Data
 
-### Absolute Frequency
-- the whole numbers. Ex. 12 or 43 out of <code>$n = 50$</code>.
+### Frequency Table
+- counts the frequency of each data type (ie, if countries, then each country)
+- they are whole numbers, obviously, since it's a count.
 
 ### Relative Frequency
-- How much of the whole the divided data comprises. Ex. 0.24 or 0.86 (for 12 or 43 out of 50)
-- aka **Proportion** - fraction with decimals (as opposed to **percentages**, basically).
+- How much of the whole each data point comprises.
+- **Absolute** numbers are whole numbers (12 or 43 out of 50)
+    - the sum is the number of data points (<code>$n$</code> or <code>$N$</code>)
+- **Proportions** are the fraction written with decimals (.24 or .86)
+    - the sum is 1
+- **Percentages** are with the <code>%</code> sign (24% or 86%)
+    - the sum is 100%
 
 ### Bar Chart
 - measures **frequency** of your data, which is grouped into **intervals** or **bins**
@@ -86,7 +92,7 @@ We use <code>$\bar{x}$</code> to estimate <code>$\mu$</code>.
 - most values on the left
 
 ---
-## Central Tendencies
+## Central Tendency
 
 3 measures of center: mode, median, mean
 
@@ -163,11 +169,82 @@ We use <code>$\bar{x}$</code> to estimate <code>$\mu$</code>.
     - I don't know why
 
 ### Standard Deviation
+- denoted by (small sigma) <code>$\sigma$</code>
 - square root of the variance (which is the average of squared deviations)
 - the most common measure of spread
-- denoted by (small sigma) <code>$\sigma$</code>
 - formula: <code>$\sigma=\sqrt{\frac{\Sigma(x_i - \bar{x})^2}{n}}$</code>
 - within a *normal distribution*, 68% of data sample falls within a 'standard deviation' from the mean, and 95% of the data sample falls within 2 'standard deviations' from the mean (see figure!).
 
 ![point of standard deviation](point-of-standard-deviation.PNG)
+
+### Bessel's Correction
+In general, samples under-estimate variability in a population because samples tend to be from the middle (especially in normal distribution).
+- To correct for this, *Bessel's Correction*
+- get average using <code>$(n-1)$</code> instead of <code>$n$</code>
+- use this **ONLY** for approximating populations using samples
+- it is **NOT** used for a whole population (or small data set)
+- if you've got a sample, where <code>$n = 5$</code> and population is <code>$N = 100$</code>, then use Bessel's Correction.
+- denoted by (small s) <code>$s$</code>
+
+**Sample standard deviation** is the standard deviation of a sample (not a population), and it uses *Bessel's Correction* to approximate the population. Its formula is: <code>$s \approx \sqrt{\frac{\Sigma(x_i - \bar{x})^2}{n-1}}$</code>
+
+Variance with Bessel's Correction (for a sample): <code>$\frac{\Sigma(x_i = \bar{x})^2}{n-1}$</code>
+
+---
+## Standardizing
+
+### Standardizing
+This term is used to compare 2 different distributions (ie Twitter vs Facebook followers). Basically, we compare them using their standard deviations as the common unit. For example, we would compare how many standard deviations away from the mean (which is our zero starting point) that our Z-value is.
+- proportion below or above the mean
+
+### Continuous Distribution
+A theoretical model:
+- a theoretically continuous (smooth) distribution that can be described with an equation, which calculates the proportion between ANY 2 points on the x-axis.
+- area under the curve should be 1 (same as the sum of all the relative frequencies)
+
+In our theoretical model of a *continuous* and *normal* distribution, the *mean*, *median*, and *mode* are all equal.
+
+### Z
+- Marks a point on the x-axis of a distribution
+- The number of standard deviations away from the mean
+
+If we want to calculate this Z in terms of standard deviations from the mean,
+we need to know:
+- the Z number
+- the mean
+- the standard deviation
+And then take the difference (mean minus Z) divided by the stand.dev.
+
+### Z-Score
+- in a standard distribution, the distance in st.dev's away from mean (0).
+- <code>$Z = \frac{x-\mu}{\sigma}$</code> where <code>$x - \mu$</code> will be positive or negative, depending on whether above or below the *mean*.
+
+### Standard Normal Distribution
+Q: What is the standard deviation of a standardized distribution?
+
+A: The z-score of sigma will be 1:
+
+<code>$Z = \frac{x - \mu}{\sigma} = \frac{\sigma - 0}{\sigma} = 1$</code>
+
+This is called the **Standard Normal Distribution**.
+
+![pic of Standard Normal Distribution](standard-normal-distribution.PNG)
+
+---
+## Normal Distribution
+
+### Normal Distribution
+- bell curve with peak in the center
+- the tails never actually touch the x-axis, they just infinitely approach it
+    - because we can never be 100% sure that there isn't a value further than that; theoretically, you can have an infinite values in a population
+
+
+### Probability Density Function (PDF)
+- the curve of a *normal distribution*
+- because the area under the curve is 1
+    - so we can get the probability of any number on x-axis (aka %)
+- there is an extra-curricular equation for this (via calculus)
+    - someone created a table for greater ease!
+- the area under the curve of a normal distribution == the probability of randomly selecting less than x == the proportion in the sample/population with scores less than x
+    - where x is the xth percentile
 
