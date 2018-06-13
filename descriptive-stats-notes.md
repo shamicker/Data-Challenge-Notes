@@ -146,9 +146,9 @@ We use <code>$\bar{x}$</code> to estimate <code>$\mu$</code>.
 - the box edges are, as shown in image below, *Q1*, *Q2*, and *Q3*
 - *outliers* are shown as dots outside of the *min* and *max* lines.
 
-![boxplot image](boxplot.PNG)
+![boxplot image](images/boxplot.PNG)
 
-![image](match-the-boxplots.PNG)
+![image](images/match-the-boxplots.PNG)
 
 ### Deviation (from the *mean*/average)
 - find the *mean*, then subtract each data point (find the absolute)
@@ -175,7 +175,7 @@ We use <code>$\bar{x}$</code> to estimate <code>$\mu$</code>.
 - formula: <code>$\sigma=\sqrt{\frac{\Sigma(x_i - \bar{x})^2}{n}}$</code>
 - within a *normal distribution*, 68% of data sample falls within a 'standard deviation' from the mean, and 95% of the data sample falls within 2 'standard deviations' from the mean (see figure!).
 
-![point of standard deviation](point-of-standard-deviation.PNG)
+![point of standard deviation](images/point-of-standard-deviation.PNG)
 
 ### Bessel's Correction
 In general, samples under-estimate variability in a population because samples tend to be from the middle (especially in normal distribution).
@@ -228,7 +228,7 @@ A: The z-score of sigma will be 1:
 
 This is called the **Standard Normal Distribution**.
 
-![pic of Standard Normal Distribution](standard-normal-distribution.PNG)
+![pic of Standard Normal Distribution](images/standard-normal-distribution.PNG)
 
 ---
 ## Normal Distribution
@@ -245,6 +245,27 @@ This is called the **Standard Normal Distribution**.
     - so we can get the probability of any number on x-axis (aka %)
 - there is an extra-curricular equation for this (via calculus)
     - someone created a table for greater ease!
-- the area under the curve of a normal distribution == the probability of randomly selecting less than x == the proportion in the sample/population with scores less than x
-    - where x is the xth percentile
+- the *area under the curve* of a normal distribution == the *probability* of randomly selecting less than x == the *proportion* in the sample/population with scores less than x
+    - where x is the xth percentile (or the Z)
 
+
+<code>$s \approx \sqrt{\frac{\Sigma(x_i - \bar{x})^2}{n-1}}$</code>
+
+<code>$Zscore = \frac{\mu -Z}{\sigma}$</code>, and then look up the *area under the curve* on the chart to get the *probability* of data scores less than *X* (or *Z*)
+
+---
+## Sampling Distributions
+
+### Central Limit Theorem
+- the distribution of means, where every mean is the mean of a sample of size <code>$n$</code>, has a standard deviation equal to the population standard deviation divided by the square root of <code>$n$</code>.
+- for any population, if you take enough samples, and plot those samples' means, you'll get roughly a normal distribution
+- aka the *standard error(SE)*
+
+
+## Standard Error (SE)
+- the standard deviation of the sampling distribution
+- the population standard deviation divided by the square root of n:
+
+<code>$SE = \frac{\sigma}{\sqrt{n}}$</code>
+
+![central limit theorem notes](images/central-limit-theorem-notes.PNG)
