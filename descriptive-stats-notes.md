@@ -56,8 +56,9 @@
     - [7.2. Samples:](#72-samples)
     - [7.3. Sampling Distribution](#73-sampling-distribution)
     - [7.4. Expected Value](#74-expected-value)
-    - [7.5. Central Limit Theorem](#75-central-limit-theorem)
     - [7.6. Standard Error (SE)](#76-standard-error-se)
+    - [7.5. Central Limit Theorem](#75-central-limit-theorem)
+    - [Other Key TakeAways](#other-key-takeaways)
 
 <!-- /TOC -->
 
@@ -285,18 +286,16 @@ In our theoretical model of a *continuous* and *normal* distribution, the *mean*
 
 ### 5.4. Z
 - Marks a point on the x-axis of a distribution
-- The number of standard deviations away from the mean
-
-If we want to calculate this Z in terms of standard deviations from the mean,
-we need to know:
-- the Z number
-- the mean
-- the standard deviation
-And then take the difference (mean minus Z) divided by the stand.dev.
 
 ### 5.5. Z-Score
-- in a standard distribution, the distance in st.dev's away from mean (0).
-- <code>$Z = \frac{x-\mu}{\sigma}$</code> where <code>$x - \mu$</code> will be positive or negative, depending on whether above or below the *mean*.
+- in a standard distribution, the distance in st.dev's away from mean.
+    - to calculate this Z-value in terms of standard deviations away from the mean,
+we need to know:
+        - the Z value/number
+        - the mean
+        - the standard deviation
+    - and then take the difference (mean minus Z) divided by the stand.dev.
+- <code>$Z.Score = \frac{x-\mu}{\sigma}$</code> where <code>$x - \mu$</code> will be positive or negative, depending on whether above or below the *mean*.
 
 ### 5.6. Standard Normal Distribution
 Q: What is the standard deviation of a standardized distribution?
@@ -341,6 +340,9 @@ This is called the **Standard Normal Distribution**.
 ### 7.1. Lesson 7 PDF
 - [Lesson 7 PDF](Lesson7.pdf)
 
+With a single data point, we can compare that value to the rest of the values with *% less* or *% greater*.
+Similarly, if we have a sample, we can compare that sample to the rest of the samples!
+
 ### 7.2. Samples:
 - A sample must represent the characteristics of the population.
     - It needs to be *large enough*,
@@ -350,24 +352,38 @@ This is called the **Standard Normal Distribution**.
             - That's how you can tell if your sample is large enough. (??)
 
 ### 7.3. Sampling Distribution
-- the distribution of sample means is the **sampling distribution**
+- the distribution of samples means is the **sampling distribution**
     - the shape will be a *normal distribution*
-    - if we calculate *ALL* the sample means, the mean of these sample means (or the *sampling distribution*) will equal the population's mean.
+    - if we calculate *ALL* the sample means, the mean of these sample means (or, the mean of the *sampling distribution*) will equal the population's mean.
+        - <code>if $\mu$ of 100% of sampling distribution, then $\mu = M$</code>
 
 ### 7.4. Expected Value
 - the mean of a population is the *expected value*, even if it's not a possible outcome (as in dice rolls).
 - it means we can expect an outcome somewhere around this value.
 
-### 7.5. Central Limit Theorem
-- the distribution of means, where every mean is the mean of a sample of size <code>$n$</code>, has a standard deviation equal to the population standard deviation divided by the square root of <code>$n$</code>.
-- for any population, if you take enough samples, and plot those samples' means, you'll get roughly a normal distribution
-- aka the *standard error(SE)*
-
-
 ### 7.6. Standard Error (SE)
 - the standard deviation of the sampling distribution
-- the population standard deviation divided by the square root of n:
-
-<code>$SE = \frac{\sigma}{\sqrt{n}}$</code>
+- the population standard deviation divided by the square root of n: <code>$SE = \frac{\sigma}{\sqrt{n}}$</code>
+- So if you have a population size of 1,
 
 ![central limit theorem notes](images/central-limit-theorem-notes.PNG)
+
+### 7.5. Central Limit Theorem
+- for any population, if you take enough samples, and plot those samples' means, you'll get roughly a normal distribution
+- aka the *standard error (SE)*
+- So:
+    - the distribution of means,
+    - where every mean is the mean of a sample of size <code>$n$</code>,
+    - has a standard deviation equal to the population standard deviation divided by the square root of <code>$n$</code>.
+
+### Other Key TakeAways
+- the larger the sample size (in a population of samples) (ie. n=2 or n=25),
+    - the narrower the histogram/ distribution. Which means:
+        - the smaller the *Standard Error*
+        - the Z-Score will be bigger for the same data point
+        - the less likely to get an outlying data point
+
+---
+---
+
+# Python & SQL
