@@ -65,9 +65,43 @@
     - [2.2. Functions](#22-functions)
         - [2.2.1. Documentation](#221-documentation)
         - [2.2.2. Lambda Expressions](#222-lambda-expressions)
-        - [Map](#map)
-        - [Filter](#filter)
-        - [Iterators and Generators](#iterators-and-generators)
+        - [2.2.3. Map](#223-map)
+        - [2.2.4. Filter](#224-filter)
+        - [2.2.5. Iterators and Generators](#225-iterators-and-generators)
+    - [2.3. Scripting](#23-scripting)
+- [3. SQL](#3-sql)
+    - [3.1. Basic SQL](#31-basic-sql)
+        - [3.1.1. Entity Relationship Diagram (ERD)](#311-entity-relationship-diagram-erd)
+        - [3.1.2. Primary Key (PK)](#312-primary-key-pk)
+        - [3.1.3. Foreign Key (FK)](#313-foreign-key-fk)
+    - [3.2. JOINS](#32-joins)
+        - [3.2.1. JOIN == INNER JOIN](#321-join--inner-join)
+        - [3.2.2. LEFT JOIN == LEFT INNER JOIN == LEFT OUTER JOIN](#322-left-join--left-inner-join--left-outer-join)
+        - [3.2.3. RIGHT JOIN == RIGHT INNER JOIN == RIGHT OUTER JOIN](#323-right-join--right-inner-join--right-outer-join)
+        - [3.2.4. OTHER TYPES OF JOINS](#324-other-types-of-joins)
+    - [3.3. AGGREGATIONS](#33-aggregations)
+        - [3.3.1. NULL](#331-null)
+        - [3.3.2. COUNT & SUM](#332-count--sum)
+        - [3.3.3. MIN & MAX](#333-min--max)
+        - [3.3.4. AVG](#334-avg)
+        - [3.3.5. MEDIAN](#335-median)
+        - [3.3.6. GROUP BY](#336-group-by)
+        - [3.3.7. DISTINCT](#337-distinct)
+        - [3.3.8. HAVING](#338-having)
+        - [3.3.9. Misc Notes](#339-misc-notes)
+        - [3.3.10. DATE_TRUNC](#3310-date_trunc)
+        - [3.3.11. DATE_PART](#3311-date_part)
+        - [3.3.12. CASE](#3312-case)
+    - [3.4. Subqueries & Temporary Tables](#34-subqueries--temporary-tables)
+        - [3.4.1. Subqueries](#341-subqueries)
+        - [3.4.2. WITH](#342-with)
+    - [3.5. SQL Data Cleaning](#35-sql-data-cleaning)
+        - [3.5.1. LEFT and RIGHT](#351-left-and-right)
+        - [3.5.2. POSITION, STRPOS, SUBSTR](#352-position-strpos-substr)
+        - [3.5.3. other things:](#353-other-things)
+        - [3.5.4. CONCAT](#354-concat)
+        - [3.5.5. CAST](#355-cast)
+        - [3.5.6. COALESCE](#356-coalesce)
 
 <!-- /TOC -->
 # 1. Descriptive Statistics
@@ -435,7 +469,7 @@ letters, nums = zip(*some_list)
 ```
 
 ### 2.1.2. List Comprehensions
-These is sort of a shortcut. It allows us to create a list using a `for` loop in a single step!
+These are a sort of shortcut. It allows us to create a list using a `for` loop in a single step!
 - not found in any other language, but very common in Python. :)
 
 ```
@@ -458,7 +492,7 @@ With an `else`:
 ```
 squares = [x**2 if x % 2 == 0 else x + 3 for x in range(9)]
 ```
-
+---
 ## 2.2. Functions
 
 ### 2.2.1. Documentation
@@ -488,7 +522,7 @@ can be reduced to:
 multiply = lambda x, y: x * y
 ```
 
-### Map
+### 2.2.3. Map
 `map` takes in a `function` and an `iterable` as inputs, and returns an interator that applies the function to each element of the iterable.
 
 ```
@@ -511,7 +545,7 @@ With `lambda`:
 averages = list(map(lambda x: sum(x) / len(x), numbers))
 ```
 
-### Filter
+### 2.2.4. Filter
 `filter` takes a `function` and `iterable` as inputs, just like `map`, and returns an iterator with the elements from the iterable *for which the function returns `True`*.
 ```
 cities = ["New York City", "Los Angeles", "Chicago", "Mountain View", "Denver", "Boston"]
@@ -527,7 +561,7 @@ With `lambda`:
 short_cities = list(filter(lambda x: len(x) < 10))
 ```
 
-### Iterators and Generators
+### 2.2.5. Iterators and Generators
 
 *Iterables* are objects that can return one of their elements at a time, such as a list. Mny of the built-in functions we've used so far, like `enumerate`, return an iterator.
 
@@ -551,4 +585,365 @@ def my_range(x):
 ```
 Notice that is uses `yield`. This allows the function to return values, but to continue on.
 - This `yield` keyword is what differentiates a generator from a typical function.
+- Also note that you cannot create generators with code that defines the iterator (ie `result = []`) before the loop!
 
+**
+You can combine generators and list comprehensions!
+Create a generator in the same way you'd normally wrie a list comprehension, except with parenthesis instead of square brackets. Example:
+```
+sq_list = [x**2 for x in range(10)]
+
+sq_iterator = (x**2 for x in range(10))
+```
+
+The 1<sup>st</sup> example produces a list of squares.
+The 2<sup>nd</sup> example produces an iterator of squares
+
+---
+## 2.3. Scripting
+---
+---
+# 3. SQL
+## 3.1. Basic SQL
+```
+SELECT [columns] (or * for all)
+FROM <table>
+WHERE column = exactly 'known'
+               LIKE '%whatever%'
+               IN ('multiple', 'conditions')
+               NOT LIKE (or NOT IN) '%whatever%'
+               AND all true things
+               BETWEEN all true things
+               OR at least 1 true thing
+ORDER BY column
+LIMIT 10;
+```
+
+### 3.1.1. Entity Relationship Diagram (ERD)
+
+- the "map" of the tables & data columns in a database
+- it's a key element to understanding how we can pull data from multiple tables
+- Choosing the setup of data in a database is very important, but not usually the job of a data analyst. The process is known as **Database Normalization**.
+
+### 3.1.2. Primary Key (PK)
+- exists in every table
+- has a unique value for EVERY row
+- commonly the first column in tables, in most databases
+
+### 3.1.3. Foreign Key (FK)
+- a column that has the same data as a *primary key* in another (linked) table.
+-ex: A table called `sales_reps` has PK column called `id` and a FK column called `region_id`.
+    - A linked table called `region` has a PK column called `id`.
+    - The `region` table's PK has the same values as `sales_reps`'s FK values.
+
+![Primary - Foreign Key Link](images/foreign_key.PNG)
+
+---
+## 3.2. JOINS
+### 3.2.1. JOIN == INNER JOIN
+- basic joins
+- pulls info *common to BOTH* tables
+
+### 3.2.2. LEFT JOIN == LEFT INNER JOIN == LEFT OUTER JOIN
+- pulls info common to both tables AND all remaining info from the table in the `FROM` clause
+
+### 3.2.3. RIGHT JOIN == RIGHT INNER JOIN == RIGHT OUTER JOIN
+- pulls info common to both tables AND all remaining info from the table in the `JOIN` clause
+
+The left & right joins only depend which table you put in the `FROM` and the `JOIN` clause.
+
+### 3.2.4. OTHER TYPES OF JOINS
+- The `FULL OUTER JOIN` is extremely rarely used
+    - mainly used for exception lists
+- `UNION` and `UNION ALL`
+- `CROSS JOIN`
+- `SELF JOIN` is tricky
+
+---
+## 3.3. AGGREGATIONS
+
+### 3.3.1. NULL
+- where a cell is blank
+    - different from a space or having 0
+- NULL is not a value, but a *property* of the data
+- `WHERE` cell `IS NULL` or `WHERE` cell `IS NOT NULL`
+- `COUNT(*)` returns all the rows that have some non-null data.
+    - since rows generally are not `NULL` all the way across, it returns the count of all your rows of data.
+
+### 3.3.2. COUNT & SUM
+`SELECT COUNT(*)`
+`SELECT SUM(cell)`
+    - returns a single row & column with the count of non-null rows
+
+### 3.3.3. MIN & MAX
+- returns the min or max of a column of values.
+- ignores all NULL values
+
+### 3.3.4. AVG
+- returns the average (sum/count) of not-null values
+
+### 3.3.5. MEDIAN
+(reminder: median is the middle-most value. Or, if there are 2 middle-most values, it's the average of the 2)
+- Median might be a more appropriate measure of center for this data, but finding the median happens to be a pretty difficult thing to get using SQL alone
+    -- SO DIFFICULT that finding a median is occasionally asked as an `interview question`!
+
+### 3.3.6. GROUP BY
+- to aggregate data within subsets of the data.
+    - ex. group sum of 3 types of paper *per account*
+- as in the above example, any column in the `SELECT` clause that is NOT within an aggregator MUST be in the `GROUP BY` clause
+- alway goes between `WHERE` and `ORDER BY`
+    - `ORDER BY` works like `sort` in a spreadsheet.
+
+It is worth noting that SQL evaluates the aggregations before the LIMIT clause. If you don’t group by any columns, you’ll get a 1-row result—no problem there. If you group by a column with enough unique values that it exceeds the LIMIT number, the aggregates will be calculated, and then some rows will simply be omitted from the results.
+
+This is actually a nice way to do things because you know you’re going to get the correct aggregates. If SQL cuts the table down to 100 rows, then performed the aggregations, your results would be substantially different.
+
+### 3.3.7. DISTINCT
+- goes within the `SELECT` clause
+- you select all rows with distinct (no duplicates) across all rows
+    - ex. (0,0), (0, 1), (1, 0), and (1, 1) are all distinct tuples. There are no more possible tuples with either a 1 or 0 in it.
+
+
+### 3.3.8. HAVING
+- just like the `WHERE` clause, except using an aggregation
+- placed after `WHERE` and `GROUP BY`, but before `ORDER BY`
+
+### 3.3.9. Misc Notes
+For this statement:
+```SQL
+SELECT a.id, a.name, SUM(o.total_amt_usd) total_spent
+FROM accounts a
+JOIN orders o
+ON a.id = o.account_id
+GROUP BY a.id, a.name
+HAVING SUM(o.total_amt_usd) < 1000
+ORDER BY total_spent;
+```
+the `HAVING` statement is evaluated before the `SELECT` statement, so the client won't know about the alias!
+
+### 3.3.10. DATE_TRUNC
+- for truncating dates, since the dates include time (so are all unique!)
+- databases should automatically format the date as YYYY-MM-DD instead of the American DD-MM-YYYY or the global MM-DD-YYYY (which, frankly, is super confusing!)
+- `GROUP BY` and `ORDER BY` should use the same metric (`DATE_TRUNC('day', occurred_at)`)
+
+`SELECT DATE_TRUNC('day', occurred_at)`  truncates to the day.
+
+### 3.3.11. DATE_PART
+- allows you to pull the part of the date that you want
+- includes `'dow'` for day of the week
+    - result is 0 through 6, which is Sunday to Saturday
+
+![DATE_PART](images/date_part.PNG)
+
+
+### 3.3.12. CASE
+- `CASE` statement is SQL's `IF-THEN` logic!
+- always goes in the `SELECT` clause
+- `CASE` followed by at least 1 pair of `WHEN` & `THEN` statements
+    - and must finish with the word `END`
+    - can include *operators* like `LIKE`, `AND`, `OR`, etc.
+    - can include an `ELSE` statement
+```sql
+SELECT account_id, CASE WHEN standard_qty = 0 OR standard_qty IS NULL THEN 0
+                        ELSE standard_amt_usd/standard_qty END AS unit_price
+FROM orders
+LIMIT 10;
+```
+Below, we're creating 2 columns. Total_group to classify over or under 500, and order_count that tallies each classification!
+```sql
+SELECT CASE WHEN total > 500 THEN 'Over 500'
+            ELSE '500 or under' END AS total_group,
+       COUNT(*) AS order_count
+FROM orders
+GROUP BY 1;
+```
+
+
+## 3.4. Subqueries & Temporary Tables
+
+### 3.4.1. Subqueries
+- a query within a query
+- the subquery is in the `FROM` clause:
+    - instead of: `FROM table1`, the line is something like:
+```SQL
+SELECT channel, events
+FROM (
+    SELECT DATE_TRUNC('day', occurred_at) AS day, channel, COUNT(*) as events
+    FROM web_events
+    GROUP BY 1, 2
+    ORDER BY 3 DESC
+    ) AS subq
+GROUP BY channel
+ORDER BY 2 DESC;
+```
+- a *subquery* MUST use an alias, as in the example above
+- can be used anywhere you use any:
+    - table, column, or even individual value
+
+Here is 1 quiz that I kept as an example:
+Provide the name of the sales_rep in each region with the largest amount of total_amt_usd sales.
+- rep and their total_usd:
+
+```sql
+SELECT t2.region, t3.rep, t2.max_tot
+FROM (
+    SELECT r.name region, MAX(t1.total) AS max_tot
+    FROM (
+        SELECT s.region_id, s.name rep, SUM(o.total_amt_usd) total
+        FROM orders o
+        JOIN accounts a
+        ON a.id = o.account_id
+        JOIN sales_reps s
+        ON s.id = a.sales_rep_id
+        GROUP BY 1, 2
+        ORDER BY 3 DESC) AS t1
+    JOIN region r
+    ON r.id = t1.region_id
+    GROUP BY 1
+    ORDER BY 2 DESC) AS t2
+JOIN (
+    SELECT s.name rep, SUM(o.total_amt_usd) total
+    FROM orders o
+    JOIN accounts a
+    ON a.id = o.account_id
+    JOIN sales_reps s
+    ON s.id = a.sales_rep_id
+    GROUP BY 1
+    ORDER BY 2 DESC ) AS t3
+ON t2.max_tot = t3.total
+```
+
+### 3.4.2. WITH
+- often called a **Common Table Expression** or **CTE**
+- serve the same purpose as a subquery, but:
+    - cleaner reading
+    - better performance times (can be)
+
+The subquery example above can be rewritten as follows:
+```sql
+WITH t1 as (
+    SELECT s.region_id, s.name rep, SUM(o.total_amt_usd) total
+    FROM orders o
+    JOIN accounts a
+    ON a.id = o.account_id
+    JOIN sales_reps s
+    ON s.id = a.sales_rep_id
+    GROUP BY 1, 2
+    ORDER BY 3 DESC),
+
+    t2 as (
+        SELECT r.name region, MAX(t1.total) AS max_tot
+        FROM t1
+        JOIN region r
+        ON r.id = t1.region_id
+        GROUP BY 1
+        ORDER BY 2 DESC),
+
+    t3 as (
+        SELECT s.name rep, SUM(o.total_amt_usd) total
+        FROM orders o
+        JOIN accounts a
+        ON a.id = o.account_id
+        JOIN sales_reps s
+        ON s.id = a.sales_rep_id
+        GROUP BY 1
+        ORDER BY 2 DESC )
+
+SELECT t2.region, t3.rep, t2.max_tot
+FROM t2
+JOIN t3
+ON t2.max_tot = t3.total
+```
+Beautiful!!!
+
+## 3.5. SQL Data Cleaning
+
+### 3.5.1. LEFT and RIGHT
+- pulls out a certain number of characters from the `LEFT` or `RIGHT`
+```sql
+SELECT first_name,
+       last_name,
+       LEFT(phone_number, 3) AS area_code,
+       RIGHT(phone_number, 8) AS phone_number_only,
+FROM customer_data;
+```
+- can also put in a `LENGTH` rather than hard-coding a certain number.
+    - ex instead of `RIGHT(phone_number, 8) AS phone_number_only`, it could be `RIGHT(phone_number, LENGTH(phone_number) - 4) AS phone_number_alt`
+
+### 3.5.2. POSITION, STRPOS, SUBSTR
+- `POSITION`: provides the position of a string (first arg) counting from the left.
+- case sensitive
+    - for example, if you have city and provinces in a single column, and want to separate them:
+        - POSITION(',' IN city_state) AS comma_position
+
+- `STRPOS` for *string position* is the same thing!
+- also case sensitive
+    - for the same example as above:
+        - STRPOS(city_state, ',') AS substr_comma_position
+
+### 3.5.3. other things:
+- `UPPER()` and `LOWER()` makes a string upper or lower case
+    - `UPPER(`string`)` AS uppercase
+- some functions CAN be nested!
+    - LEFT( UPPER(string) )
+    - LEFT(city_state, POSITION(',' IN city_state)-1 ) AS city
+        - the minus 1 after `POSITION` is so we do not include the comma in our string!
+    -
+
+Use the accounts table to create first and last name columns that hold the first and last names for the primary_poc.
+```sql
+SELECT LEFT(primary_poc, POSITION(' ' IN primary_poc)) AS first_name,
+	   RIGHT(primary_poc, LENGTH(primary_poc) - STRPOS(primary_poc, ' ')) AS last_name
+FROM accounts
+```
+
+### 3.5.4. CONCAT
+- concatenate multiple values into a single column
+- both `CONCAT` and `||` can be used to concat strings together!
+- The following are both equivalent:
+    ```sql
+    SELECT first_name || ' ' || last_name AS full_name
+           CONCAT(first_name, ' ', last_name) AS full_name_alt
+    ```
+
+We would also like to create an initial password, which they will change after their first log in. The first password will be the first letter of the primary_poc's first name (lowercase), then the last letter of their first name (lowercase), the first letter of their last name (lowercase), the last letter of their last name (lowercase), the number of letters in their first name, the number of letters in their last name, and then the name of the company they are working with, all capitalized with no spaces.
+```sql
+WITH t1 as (
+  SELECT LEFT(primary_poc, STRPOS(primary_poc, ' ')-1) AS first_name,
+       RIGHT(primary_poc, LENGTH(primary_poc) - STRPOS(primary_poc, ' ')) AS last_name,
+       REPLACE(name, ' ', '') AS company
+  FROM accounts)
+
+SELECT LOWER(LEFT(first_name, 1) || RIGHT(first_name, 1) || LEFT(last_name, 1) || RIGHT(last_name, 1)) || LENGTH(first_name) || LENGTH(last_name) || UPPER(company) AS password
+FROM t1;
+```
+
+### 3.5.5. CAST
+- `CAST` allows us to change columns from one data type to another!
+- a shortcut is `::` (like the `CONCAT` shortcut is `||`)
+- For example, say we have 3 columns: month, day, year, and we want to concat them and make it a date format:
+```sql
+SELECT *,
+       year || '-' ||DATE_PART('month', TO_DATE(month, 'month')) || '-' || day AS concatenated_date,
+       CAST(year || '-' || DATE_PART('month', TO_DATE(month, 'month')) || '-' || day AS date) AS formatted_date,
+       (year || '-' || DATE_PART('month', TO_DATE(month, 'month')) || '-' || day)::date AS formatted_date_alt
+FROM ad_clicks;
+```
+Phew! If you ran this query, for January 1, 2014
+    - concatenated_date would look like `2014-1-1`
+    - both formatted_date and formatted_date_alt would look like `2014-01-01`
+
+PRO TIP:
+- performing a `LEFT`, `RIGHT` or `SUBSTR` function will automatically cast the data to a string data type.
+
+### 3.5.6. COALESCE
+- `COALESCE` returns the first non-null value passed for each row
+- using this, we can fill the `NULL` values and then have a value in every cell
+```sql
+SELECT COUNT(primary_poc),
+       COALESCE(primary_poc, 'no POC') AS primary_poc_modified
+FROM accounts
+WHERE primary_poc IS NULL
+```
+
+![COURSE COMPLETED!](images/Finished.PNG)
